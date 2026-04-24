@@ -104,6 +104,54 @@ print(result ?? "nil")
 🔥 Запоминалка
 ?? — если есть, покажи число; если нет — покажи "nil"
 
+## 🔥 Получение второго элемента из строки
+
+### Задача
+На вход приходит `String?` со словами через пробел. Нужно напечатать 'второй элемент' (индекс 1).
+
+### 🤔 Решение (классическое)
+
+func printSecondWord(_ name: String?) {
+    guard let name = name else { return }
+    let parts = name.components(separatedBy: " ")
+    if parts.count >= 2 {
+        print(parts[1])
+    } else {
+        print("no second word")
+    }
+}
+
+🤔 Решение (функциональное)
+
+func displaySecondWord(_ name: String?) {
+    guard let name = name else { return }
+    let parts = name.split(separator: " ")
+    if let second = parts.dropFirst().first {
+        print(second)
+    } else {
+        print("no second word")
+    }
+}
+✅ Что здесь важно
+    1. guard let — защита от nil
+    2. components(separatedBy: " ") — разбивает строку по пробелам
+    3. dropFirst().first — безопасный способ взять второй элемент без проверки count
+
+🔥 Запоминалка
+dropFirst().first = возьми второй элемент, не бойся nil
+
+⚠️  if let second = components.dropFirst().first {
+    print(second)
+}
+components.dropFirst() — отбрасывает первый элемент ("John"), оставляя ["Ronald", "Reuel", "Tolkien"].
+
+.first — берёт первый элемент из ЭТОГО нового массива, то есть "Ronald". И возвращает его как опционал (Optional("Ronald")).
+
+if let second = ... — безопасно извлекает это значение. Если исходный массив components был пуст или в нём был только один элемент, то после dropFirst() массив станет пустым, .first вернёт nil, и условие if let не сработает.
+
+⚡️ В чём суть?
+dropFirst().first — это способ безопасно получить второй элемент оригинального массива, не проводя отдельную проверку components.count >= 2.
+
 🔆 Использовать, когда нужно:
     1. безопасно работать с опционалами
     2. избежать принудительного извлечения (!)
