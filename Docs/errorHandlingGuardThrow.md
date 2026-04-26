@@ -1,4 +1,4 @@
-# Обработка ошибок: return, throw и их друзья
+# guard, return, throw и преобразование строк в числа
 
 ## 🧠 Модель: дороги и КПП
 
@@ -20,7 +20,19 @@
 
 ---
 
-## 🔁 Пример: return (ваш код)
+## 🧠 Почему Int("строка") возвращает опционал
+
+- `Int("50")` → ✅ получаем `Optional(50)`
+- `Int("пять")` → ❌ получаем `nil`
+
+Swift **требует** обработать оба случая через `if let` или `guard let`.  
+Если бы `Int()` возвращал обычный `Int`, при ошибке программа бы упала.
+
+> Любое рискованное преобразование → опционал → проверка → безопасность
+
+---
+
+## 🔁 Пример: return (штатная проверка)
 
 ```swift
 func authenticate(username: String?, password: String?) -> String {
@@ -61,18 +73,40 @@ do {
 } catch AuthError.invalidCredentials {
     print("Wrong login or password")
 }
+🔁 Пример: проверка пользователя с возрастом
+swift
+func checkUserInput(name: String?, age: String?) -> String {
+    guard let userName = name, !userName.isEmpty,
+          let userAgeString = age, !userAgeString.isEmpty
+    else {
+        return "Error: name and age are required"
+    }
+
+    guard let userAge = Int(userAgeString) else {
+        return "Error: age must be a number"
+    }
+
+    guard userAge >= 0 && userAge <= 120 else {
+        return "Error: age must be between 0 and 120"
+    }
+
+    return "Hello, \(userName)! You are \(userAge) years old."
+}
 🧠 Запоминалка на одном листе
 guard — проверяем вход, чтобы дальше не упасть
 
 if let — развилка, оба пути ведут дальше
 
-return ошибка — сказать "не получилось, сделай так"
+return ошибка — сказать «не получилось, сделай так»
 
-throw ошибка — крикнуть "всё сломано, чини!"
+throw ошибка — крикнуть «всё сломано, чини!»
+
+Int("строка") — всегда даёт опционал → разворачивай через guard let или if let
 
 ✅ Золотое правило
-Если ошибка штатная (не заполнено поле) — возвращайте String.
-Если ошибка нештатная (нет связи с сервером) — бросайте Error.
+Штатная ошибка (не заполнено поле) → return с сообщением.
+
+Нештатная ошибка (нет связи) → throw Error.
 
 📅 Добавлено: 26.04.2026
 👤 Автор: vale-ponick
