@@ -53,5 +53,58 @@ NaN — строка не стала числом (Not a Number)
 
 Разветвить логику: число есть / числа нет.
 
+# Temperature Converter — guard + if let / guard
+
+## ⚡️ Суть
+Функция конвертации температуры с защитой от `nil` и невалидного ввода.
+
+## 📝 Три стиля решения
+
+### Вариант 1: `if let` + плоский код
+
+```swift
+func convertTemperature(input: String?) -> String {
+    guard let inputValue = input, !inputValue.isEmpty else { return "No input" }
+    
+    if let temperature = Double(inputValue) {
+        if temperature >= 100 { return "Boiling" }
+        if temperature > 0 && temperature < 100 { return "Liquid" }
+        return "Freezing"
+    } else {
+        return "Not a number"
+    }
+}
+Вариант 2: if let + switch
+swift
+func convertTemp(input: String?) -> String {
+    guard let inputValue = input, !inputValue.isEmpty else { return "No input" }
+    
+    if let temperature = Double(inputValue) {
+        switch temperature {
+        case 100...: return "Boiling"
+        case ..<0: return "Freezing"
+        default: return "Liquid"
+        }
+    } else {
+        return "Not a number"
+    }
+}
+Вариант 3: два guard (самый короткий)
+swift
+func convertTempera(input: String?) -> String {
+    guard let inputValue = input, !inputValue.isEmpty else { return "No input" }
+    guard let temperature = Double(inputValue) else { return "Not a number" }
+    
+    if temperature >= 100 { return "Boiling" }
+    if temperature <= 0 { return "Freezing" }
+    return "Liquid"
+}
+🔥 Запоминалка
+guard — проверка входа (nil, пустота, преобразование)
+
+if let — мягкое разветвление (число / не число)
+
+switch — чистые диапазоны
+
 📅 Добавлено: 28.04.2026
 👤 Автор: Валерия Поник (vale-ponick)
