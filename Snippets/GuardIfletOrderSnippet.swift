@@ -26,3 +26,22 @@ print(processOrder(customer: nil, items: 2, price: 21.21))
 
 print(processOrder(customer: "vale.ponick", items: -7, price: -7.77))
 // Invalid order: negative values not allowed
+
+print("🧩 Задача: check Stock: Напиши функцию, которая: guard — проверяет, что ни один из параметров не nil. Если есть nil → вернуть 'Missing data: product, quantity or price is nil'. if — проверяет, что quantity больше 0 и price больше 0. Если нет → вернуть 'Invalid values: quantity and price must be positive'. Если всё ок → вернуть строку: 'Product: <product>. Available: <quantity> pcs. Total value: <quantity * price> RUB'. Сумму округли до двух знаков.")
+
+func checkStock(product: String?, quantity: Int?, price: Double?) -> String {
+    // 1. Проверяем, что все параметры не nil
+    guard let product, let quantity, let price else {
+        return "Missing data: product, quantity or price is nil"
+    }
+    // 2. Проверяем отрицательные значения
+    if quantity <= 0 || price <= 0 {
+        return "Invalid values: quantity and price must be positive"
+    }
+        // 3. все ОК - считаем сумму
+        let totalValue = Double(quantity) * price
+        return "Product: \(product). Available: \(quantity) pcs. Total value: \(String(format: "%.2f", totalValue)) RUB"
+}
+print(checkStock(product: nil, quantity: -3, price: 777.7)) // Missing data: product, quantity or price is nil
+print(checkStock(product: "Milk", quantity: 3, price: -112)) // Invalid values: quantity and price must be positive
+print(checkStock(product: "Bred", quantity: 2, price: 52)) // Product: Bred. Available: 2 pcs. Total value: 104.00 RUB
