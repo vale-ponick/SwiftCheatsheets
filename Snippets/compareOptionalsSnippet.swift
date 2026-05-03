@@ -29,7 +29,7 @@ func safeCompare(_ x: Int?, _ y: Int?) -> String {
 }
 print("🧩 Задача 27 (с ?? - nil-coalescing): Та же функция compareOptionalNums, но если число nil, заменяем его на 0 (через ??), а затем сравниваем.")
 
-// MARK: - Сравнение опционалов (nil учитывается)
+// MARK: - - Задача 26. Сравнение двух опционалов Int? (nil учитывается)
 func compareOptNums(_ x: Int?, _ y: Int?) -> String {
     switch (x, y) {
     case (nil, nil):
@@ -43,7 +43,7 @@ func compareOptNums(_ x: Int?, _ y: Int?) -> String {
         return x > y ? "First > Second (\(x) > \(y))" : "First < Second (\(x) < \(y))"
     }
 }
-// MARK: - Сравнение с заменой nil на 0 (nil-coalescing)
+// MARK: - Задача 27. Сравнение с заменой nil на 0 (nil-coalescing)
 func compareWithDefault(_ x: Int?, _ y: Int?) -> String {
     if x == nil && y == nil { return "Both nil" }
     let a = x ?? 0
@@ -59,3 +59,19 @@ print(compareOptNums(8, 888)) // First < Second (8 < 888)
 print(compareWithDefault(nil, nil)) // Equal (0)
 print(compareWithDefault(7, nil)) // First > Second (7 > 0)
 print(compareWithDefault(77, 7)) // First > Second (77 > 7)
+
+// MARK: - Задача 28. Сравнение двух опциональных строк (лексикографическое)
+
+func compareStrings(_ a: String?, _ b: String?) -> String {
+    switch (a, b) {
+    case (nil, nil):
+        return "Both nil"
+    case (nil, .some(let b)):
+        return "First nil, second = \(b)"
+    case (.some(let a), nil):
+        return "First = \(a), second nil"
+    case (.some(let a), .some(let b)):
+        if a == b { return "Equal" }
+        return a < b ? "First < Second" : "First > Second"
+    }
+}
