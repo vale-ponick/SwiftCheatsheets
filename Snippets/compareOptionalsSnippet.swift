@@ -27,3 +27,35 @@ func safeCompare(_ x: Int?, _ y: Int?) -> String {
     }
     return a > b ? "First > Second (\(a) > \(b))" : "First < Second (\(a) < \(b))"
 }
+print("🧩 Задача 27 (с ?? - nil-coalescing): Та же функция compareOptionalNums, но если число nil, заменяем его на 0 (через ??), а затем сравниваем.")
+
+// MARK: - Сравнение опционалов (nil учитывается)
+func compareOptNums(_ x: Int?, _ y: Int?) -> String {
+    switch (x, y) {
+    case (nil, nil):
+        return "Both nil"
+    case (nil, .some (let y)):
+        return "First nil, second = \(y)"
+    case (.some (let x), nil):
+        return "First = \(x), second nil"
+    case (.some (let x), .some (let y)):
+        if x == y { return "Equal (\(x))" }
+        return x > y ? "First > Second (\(x) > \(y))" : "First < Second (\(x) < \(y))"
+    }
+}
+// MARK: - Сравнение с заменой nil на 0 (nil-coalescing)
+func compareWithDefault(_ x: Int?, _ y: Int?) -> String {
+    if x == nil && y == nil { return "Both nil" }
+    let a = x ?? 0
+    let b = y ?? 0
+    
+    if a == b {
+        return "Equal (\(a))"
+    }
+    return a > b ? "First > Second (\(a) > \(b))" : "First < Second (\(a) < \(b))"
+}
+print(compareOptNums(nil, 888)) // First nil, second = 888
+print(compareOptNums(8, 888)) // First < Second (8 < 888)
+print(compareWithDefault(nil, nil)) // Equal (0)
+print(compareWithDefault(7, nil)) // First > Second (7 > 0)
+print(compareWithDefault(77, 7)) // First > Second (77 > 7)
