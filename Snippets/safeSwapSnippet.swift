@@ -1,9 +1,9 @@
-## 🔧 **Сниппет: `SafeSwapSnippet.swift`**
+## 🔧 **`SafeSwapSnippet.swift`**
 
 ```swift
 import Foundation
 
-// MARK: - Безопасная перестановка двух элементов в массиве
+// MARK: - 🔄 Безопасная перестановка двух элементов в массиве
 
 func swapElements<T>(in array: [T], from first: Int, to second: Int) -> [T]? {
     guard !array.isEmpty else { return nil }
@@ -18,7 +18,7 @@ func swapElements<T>(in array: [T], from first: Int, to second: Int) -> [T]? {
     return copy
 }
 
-// MARK: - Примеры использования
+// MARK: - 🧪 Примеры использования
 
 let headers = ["id", "name", "email", "birthDate", "isActive"]
 
